@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("digikala-netCore")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+37d508404996f78dd37aa9ad464cb48c575effa5")]
 [assembly: System.Reflection.AssemblyProductAttribute("digikala-netCore")]
 [assembly: System.Reflection.AssemblyTitleAttribute("digikala-netCore")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
