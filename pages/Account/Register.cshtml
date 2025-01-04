@@ -1,0 +1,26 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<form method="post">
+  <div class="container">
+
+    <h1>Register</h1>
+
+    <label for="userName"><b>UserName</b></label>
+    <input type="text" placeholder="Enter userName" name="UserName" id="UserName" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="Password" id="Password" required>
+
+    <label for="psw-repeat"><b>Repeat Password</b></label>
+        <input type="password" placeholder="Repeat ConfirmPassword" name="ConfirmPassword" id="ConfirmPassword" required>
+    <hr>
+
+    <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+    <button type="submit" class="registerbtn">Register</button>
+  </div>
+
+</form>
