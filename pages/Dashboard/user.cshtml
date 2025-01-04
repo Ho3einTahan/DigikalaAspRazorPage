@@ -1,0 +1,50 @@
+﻿@page
+@model UserModel
+@{
+    ViewData["Title"] = "ManageUser";
+}
+
+<h2>Manage User Roles</h2>
+
+<table border="1" style="width: 100%; text-align: left; margin-bottom: 20px;">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Current Roles</th>
+            <th>Assign New Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td>@user.Email</td>
+                <td>@string.Join(", ", user.Roles)</td>
+                <td>
+                    <form method="post">
+
+                        <select name="SelectedRole">
+                            @foreach (var role in Model.AllRoles)
+                            {
+                                <option value="@role">@role</option>
+                            }
+                        </select>
+
+                        <input type="hidden" name="UserId" value="@user.Id" />
+                        <button type="submit">Assign Role</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" asp-page-handler="RemoveRole">
+                        <input type="hidden" name="UserId" value="@user.Id" />
+                        <input type="hidden" name="RoleToRemove" value="@user.Roles.FirstOrDefault()" />
+                        <button type="submit">Remove Role</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
