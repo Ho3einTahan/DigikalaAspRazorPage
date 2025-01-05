@@ -1,48 +1,75 @@
 ﻿@page
 @model UserModel
 @{
-    ViewData["Title"] = "ManageUser";
+    ViewData["Title"] = "مدیریت نقش کاربران";
 }
 
-<h2>Manage User Roles</h2>
+<h2 class="text-center mt-4" style="font-family: 'IRANSans', sans-serif;">مدیریت نقش کاربران</h2>
 
-<table border="1" style="width: 100%; text-align: left; margin-bottom: 20px;">
-    <thead>
-        <tr>
-            <th>نام کاربری</th>
-            <th>نقش فعلی</th>
-            <th>تعریف نقش جدید</th>
-            <th>عملیات</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model.Users)
-        {
+<div class="container mt-5">
+    <table class="table table-bordered table-hover text-center" style="direction: rtl; font-family: 'IRANSans', sans-serif;">
+        <thead class="table-dark">
             <tr>
-                <td>@user.Username</td>
-                <td>@string.Join(", ", user.Roles)</td>
-                <td>
-                    <form method="post">
-
-                        <select name="SelectedRole">
-                            @foreach (var role in Model.AllRoles)
-                            {
-                                <option value="@role">@role</option>
-                            }
-                        </select>
-
-                        <input type="hidden" name="UserId" value="@user.Id" />
-                        <button type="submit">Assign Role</button>
-                    </form>
-                </td>
-                <td>
-                    <form method="post" asp-page-handler="RemoveRole">
-                        <input type="hidden" name="UserId" value="@user.Id" />
-                        <input type="hidden" name="RoleToRemove" value="@user.Roles.FirstOrDefault()" />
-                        <button type="submit">Remove Role</button>
-                    </form>
-                </td>
+                <th>نام کاربری</th>
+                <th>نقش فعلی</th>
+                <th>تعریف نقش جدید</th>
+                <th>عملیات</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.Username</td>
+                    <td>
+                        @if (user.Roles.Any())
+                        {
+                            @foreach (var role in user.Roles)
+                            {
+                                <span class="badge bg-primary mx-1">@role</span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">بدون نقش</span>
+                        }
+                    </td>
+                    <td>
+                        <form method="post" class="d-flex justify-content-center align-items-center">
+                            <select name="SelectedRole" class="form-select form-select-sm me-2" style="width: 150px;">
+                                <option value="" disabled selected>انتخاب نقش</option>
+                                @foreach (var role in Model.AllRoles)
+                                {
+                                    <option value="@role">@role</option>
+                                }
+                            </select>
+                            <input type="hidden" name="UserId" value="@user.Id" />
+                            <button type="submit" class="btn btn-success btn-sm">افزودن</button>
+                        </form>
+                    </td>
+                    <td>
+                            <form method="post" asp-page-handler="RemoveRole">
+                                <input type="hidden" name="UserId" value="@user.Id" />
+                                <input type="hidden" name="RoleToRemove" value="@user.Roles.FirstOrDefault()" />
+                                <button type="submit" class="btn btn-danger btn-sm">حذف</button>
+                            </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger text-center" style="direction: rtl;">
+            لطفاً خطاهای زیر را بررسی کنید:
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+</div>

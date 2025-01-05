@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 [Authorize(Roles = "Admin")]
 public class UserModel : PageModel
 {
+
     private readonly UserManager<IdentityUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
 
@@ -42,6 +43,7 @@ public class UserModel : PageModel
     public async Task<IActionResult> OnPostAsync(string UserId, string SelectedRole)
     {
         var user = await _userManager.FindByIdAsync(UserId);
+
         if (user != null)
         {
             await _userManager.AddToRoleAsync(user, SelectedRole);
@@ -54,11 +56,17 @@ public class UserModel : PageModel
     {
         var user = await _userManager.FindByIdAsync(UserId);
 
-        if (user != null)
+
+        if (user == null)
+        {
+            ModelState.AddModelError(string.Empty, "کاربر یافت نشد.");
+            return Page();
+        }
+
+        if (!string.IsNullOrEmpty(RoleToRemove))
         {
             await _userManager.RemoveFromRoleAsync(user, RoleToRemove);
         }
-
         return RedirectToPage();
     }
 
