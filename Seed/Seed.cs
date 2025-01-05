@@ -14,6 +14,7 @@ namespace digikala_netCore.Seed
             if (!await roleManager.RoleExistsAsync("Admin"))
             {
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
+                await roleManager.CreateAsync(new IdentityRole("User"));
             }
 
             // Check Default Admin Is Exist
@@ -25,7 +26,6 @@ namespace digikala_netCore.Seed
                 var defaultAdmin = new IdentityUser
                 {
                     UserName = "admin",
-                    EmailConfirmed = true
                 };
 
                 var result = await userManager.CreateAsync(defaultAdmin, "admin@123");
