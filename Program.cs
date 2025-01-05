@@ -1,6 +1,5 @@
 ﻿using digikala_netCore.Data;
 using digikala_netCore.Seed;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -70,7 +69,7 @@ app.UseAuthentication();
 // Register Authorization Middleware
 app.UseAuthorization();
 
-// Register Razor Pages for all routes, including /dashboard
+// Register Razor Pages for all routes
 app.MapRazorPages();
 
 app.Run();
