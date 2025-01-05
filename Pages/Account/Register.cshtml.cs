@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class RegisterModel : PageModel
 {
@@ -20,12 +21,19 @@ public class RegisterModel : PageModel
     public string Password { get; set; }
 
     [BindProperty]
-    public string Role { get; set; }
+    public string ConfirmPassword { get; set; }
+
+    public string ErrorMessage { get; set; }
 
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
+            return Page();
+        }
+
+        if (Password!=ConfirmPassword) {
+            ModelState.AddModelError(string.Empty, "ò·„Â ⁄»Ê—  ÿ«»ﬁ ‰œ«—œ");
             return Page();
         }
 
@@ -36,13 +44,8 @@ public class RegisterModel : PageModel
 
         if (result.Succeeded)
         {
-            // Assign Role
-            if (!await _roleManager.RoleExistsAsync(Role))
-            {
-                await _roleManager.CreateAsync(new IdentityRole(Role));
-            }
 
-            await _userManager.AddToRoleAsync(user, Role);
+            await _userManager.AddToRoleAsync(user, "User");
 
             return RedirectToPage("/Index");
         }

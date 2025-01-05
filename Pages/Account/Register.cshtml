@@ -23,4 +23,17 @@
     <button type="submit" class="registerbtn">Register</button>
   </div>
 
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger text-center" style="direction: rtl;">
+            لطفاً خطاهای زیر را بررسی کنید:
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
 </form>
