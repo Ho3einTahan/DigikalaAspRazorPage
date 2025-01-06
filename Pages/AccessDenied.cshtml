@@ -1,0 +1,77 @@
+﻿@page
+@model AccessDeniedModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Denied</title>
+    <style>
+        html, body {
+            height: 0px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e1e2f, #3a3a5c);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .access-denied-container {
+            max-width: 600px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 80px;
+            color: #ff5252;
+        }
+
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .message {
+            font-size: 18px;
+            color: #b0b0b0;
+        }
+
+        .btn-home {
+            margin-top: 20px;
+            color: white;
+            background-color: #ff5252;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-home:hover {
+            background-color: #ff7575;
+        }
+    </style>
+</head>
+<body>
+    <div class="access-denied-container">
+        <div class="icon">🔒</div>
+        <div class="title">Access Denied</div>
+        <p class="message">You do not have permission to access this page.<br>Please contact your administrator if you believe this is a mistake.</p>
+        <a href="/" class="btn-home">Go to Home</a>
+    </div>
+</body>
+</html>

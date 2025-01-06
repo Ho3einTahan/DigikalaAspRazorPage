@@ -1,0 +1,99 @@
+﻿@page
+@model CreateProductModel
+@{
+    ViewData["Title"] = "افزودن محصول";
+}
+
+<style>
+
+    html, body {
+        height: 0px;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    body {
+        background: linear-gradient(135deg, #1e1e2f, #3a3a5c);
+        color: white;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: 500px;
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333333;
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    .form-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #4e73df;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+        .form-control:focus {
+            border-color: #4e73df;
+            box-shadow: 0 0 5px rgba(78, 115, 223, 0.5);
+        }
+
+    .btn {
+        border-radius: 10px;
+        background-color: #4e73df;
+        color: #fff;
+        font-size: 1rem;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn:hover {
+            background-color: #375acb;
+        }
+
+    .alert {
+        margin-top: 10px;
+        color: red;
+        font-size: 0.9rem;
+    }
+</style>
+    <div class="form-container">
+        <h1>افزودن محصول</h1>
+        <form method="post" enctype="multipart/form-data">
+            <label for="name" class="form-label">نام محصول</label>
+            <input type="text" id="name" name="Name" class="form-control" placeholder="نام محصول را وارد کنید" required />
+
+            <label for="description" class="form-label">توضیحات</label>
+            <textarea id="description" name="Description" class="form-control" placeholder="توضیحات محصول را وارد کنید" rows="3"></textarea>
+
+            <label for="price" class="form-label">قیمت</label>
+            <input type="number" id="price" name="Price" class="form-control" placeholder="قیمت محصول را وارد کنید" step="0.01" required />
+
+            <label for="image" class="form-label">تصویر محصول</label>
+            <input type="file" id="image" name="Image" class="form-control" accept="image/*" required />
+
+            <button type="submit" class="btn">افزودن محصول</button>
+
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="alert">@Model.ErrorMessage</div>
+            }
+        </form>
+    </div>
