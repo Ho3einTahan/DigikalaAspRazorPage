@@ -40,7 +40,7 @@ public class LoginModel : PageModel
         }
 
         // Log in the user
-        var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password,true, lockoutOnFailure: false);
+        var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, true, lockoutOnFailure: false);
 
         if (result.Succeeded)
         {
