@@ -17,13 +17,13 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.Configure<IdentityOptions>(options =>
  {
-    // Password Setting
-    options.Password.RequireDigit = false;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequireUppercase = false;
-    options.Password.RequiredLength = 8;
-    options.Password.RequiredUniqueChars = 2;
+     // Password Setting
+     options.Password.RequireDigit = false;
+     options.Password.RequireLowercase = true;
+     options.Password.RequireNonAlphanumeric = false;
+     options.Password.RequireUppercase = false;
+     options.Password.RequiredLength = 8;
+     options.Password.RequiredUniqueChars = 2;
  });
 
 
