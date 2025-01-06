@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 public class RegisterModel : PageModel
 {
@@ -32,7 +31,8 @@ public class RegisterModel : PageModel
             return Page();
         }
 
-        if (Password!=ConfirmPassword) {
+        if (Password != ConfirmPassword)
+        {
             ModelState.AddModelError(string.Empty, "ò·„Â ⁄»Ê—  ÿ«»ﬁ ‰œ«—œ");
             return Page();
         }
