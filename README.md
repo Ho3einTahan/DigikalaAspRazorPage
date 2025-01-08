@@ -1,51 +1,48 @@
+# README: Digikala Online Store Project
 
-# پروژه فروشگاه آنلاین دیجی‌کالا
-
-## فهرست مطالب
-1. **مقدمه**
-2. **پیش‌نیازها**
-3. **نصب و راه‌اندازی پروژه**
-4. **پیکربندی دیتابیس**
-5. **ساخت مدل‌ها و DbContext**
-6. **پیکربندی Identity**
-7. **ایجاد صفحات Razor**
-8. **اجرای Migrations و به‌روزرسانی دیتابیس**
-9. **آزمایش پروژه**
-10. **عیب‌یابی و مشکلات رایج**
-11. **اطلاعات تیم توسعه‌دهنده**
-
----
-
-## 1. مقدمه
-
-پروژه فروشگاه آنلاین دیجی‌کالا با استفاده از **ASP.NET Core** و **Razor Pages** ساخته شده است. این پروژه شامل امکاناتی برای مدیریت محصولات، احراز هویت کاربران، سبد خرید، و پرداخت آنلاین می‌باشد.
+## Table of Contents
+1. **Introduction**
+2. **Prerequisites**
+3. **Setting Up the Project**
+4. **Database Configuration**
+5. **Creating Models and DbContext**
+6. **Identity Configuration**
+7. **Creating Razor Pages**
+8. **Running Migrations**
+9. **Testing the Project**
+10. **Troubleshooting**
+11. **Development Team**
 
 ---
 
-## 2. پیش‌نیازها
-
-برای راه‌اندازی پروژه، به پیش‌نیازهای زیر نیاز دارید:
-
-- **.NET 6 یا بالاتر** نصب شده بر روی سیستم شما.
-- **Visual Studio** یا **VS Code** برای توسعه پروژه.
-- **SQL Server** یا هر دیتابیس دیگر.
-- **Entity Framework Core Tools** برای اجرای Migrations و ارتباط با دیتابیس.
+## 1. Introduction
+The Digikala Online Store project is built using **ASP.NET Core** and **Razor Pages**. It includes features such as product management, user authentication, shopping cart functionality, and online payments.
 
 ---
 
-## 3. نصب و راه‌اندازی پروژه
+## 2. Prerequisites
+To run and develop this project, ensure you have the following:
 
-1. ابتدا در ترمینال دستور زیر را وارد کنید تا یک پروژه جدید بسازید:
+- **.NET 6 or later** installed on your system.
+- **Visual Studio** or **VS Code** for development.
+- **SQL Server** or any other preferred database.
+- **Entity Framework Core Tools** for database migrations.
+
+---
+
+## 3. Setting Up the Project
+
+1. Create a new project using the terminal:
    ```bash
    dotnet new razor -n digikala-netCore
    ```
 
-2. به پوشه پروژه وارد شوید:
+2. Navigate to the project directory:
    ```bash
    cd digikala-netCore
    ```
 
-3. پکیج‌های مورد نیاز را نصب کنید:
+3. Install the necessary NuGet packages:
    ```bash
    dotnet add package Microsoft.EntityFrameworkCore.SqlServer
    dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
@@ -54,16 +51,16 @@
 
 ---
 
-## 4. پیکربندی دیتابیس
+## 4. Database Configuration
 
-1. در فایل `appsettings.json` اطلاعات اتصال به دیتابیس را وارد کنید:
+1. Add the database connection string in `appsettings.json`:
    ```json
    "ConnectionStrings": {
        "DefaultConnection": "Server=your_server;Database=your_database;User Id=your_user;Password=your_password;"
    }
    ```
 
-2. در `Program.cs`، DbContext را به پروژه اضافه کنید:
+2. Update `Program.cs` to configure the database context:
    ```csharp
    builder.Services.AddDbContext<ApplicationDbContext>(options =>
        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -73,9 +70,9 @@
 
 ---
 
-## 5. ساخت مدل‌ها و DbContext
+## 5. Creating Models and DbContext
 
-1. یک پوشه جدید به نام `Models` بسازید و مدل `Product` را به صورت زیر ایجاد کنید:
+1. Create a new folder named `Models` and add a `Product` model:
    ```csharp
    public class Product
    {
@@ -87,7 +84,7 @@
    }
    ```
 
-2. `ApplicationDbContext` را در پوشه `Data` به شکل زیر تعریف کنید:
+2. Define `ApplicationDbContext` in the `Data` folder:
    ```csharp
    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
    {
@@ -100,91 +97,111 @@
 
 ---
 
-## 6. پیکربندی Identity
+## 6. Identity Configuration
 
-برای استفاده از **Identity**، در `Program.cs` تنظیمات زیر را اضافه کنید:
+To configure **Identity** and handle user authentication, follow these steps:
 
-```csharp
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-   .AddEntityFrameworkStores<ApplicationDbContext>();
-```
+1. Add Identity setup in `Program.cs`:
+   ```csharp
+   builder.Services.AddDbContext<ApplicationDbContext>(options =>
+       options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+   builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+       options.SignIn.RequireConfirmedAccount = true)
+       .AddEntityFrameworkStores<ApplicationDbContext>();
+   ```
 
----
+2. Use `UserManager` and `RoleManager` in your services to manage user roles and permissions effectively:
+   ```csharp
+   public class RoleInitializer
+   {
+       public static async Task SeedRoles(RoleManager<IdentityRole> roleManager)
+       {
+           if (!await roleManager.RoleExistsAsync("Admin"))
+           {
+               await roleManager.CreateAsync(new IdentityRole("Admin"));
+           }
 
-## 7. ایجاد صفحات Razor
-
-برای ایجاد صفحه مدیریت محصولات، ابتدا `Product.cshtml` و `Product.cshtml.cs` را در پوشه `Pages` بسازید.
-
-```csharp
-public class ProductModel : PageModel
-{
-    private readonly ApplicationDbContext _context;
-
-    public ProductModel(ApplicationDbContext context)
-    {
-        _context = context;
-    }
-
-    public List<Product> Products { get; set; }
-
-    public void OnGet()
-    {
-        Products = _context.Products.ToList();
-    }
-}
-```
-
-در `Product.cshtml` طراحی کنید که محصولات را نمایش دهد.
+           if (!await roleManager.RoleExistsAsync("User"))
+           {
+               await roleManager.CreateAsync(new IdentityRole("User"));
+           }
+       }
+   }
+   ```
 
 ---
 
-## 8. اجرای Migrations و به‌روزرسانی دیتابیس
+## 7. Creating Razor Pages
 
-1. برای ایجاد یک migration جدید، دستور زیر را وارد کنید:
+Create Razor Pages to manage products:
+
+1. Add a new Razor Page for products in the `Pages` folder.
+2. Define the logic in `Product.cshtml.cs`:
+   ```csharp
+   public class ProductModel : PageModel
+   {
+       private readonly ApplicationDbContext _context;
+
+       public ProductModel(ApplicationDbContext context)
+       {
+           _context = context;
+       }
+
+       public List<Product> Products { get; set; }
+
+       public void OnGet()
+       {
+           Products = _context.Products.ToList();
+       }
+   }
+   ```
+3. Design the layout in `Product.cshtml` to display the products.
+
+---
+
+## 8. Running Migrations
+
+1. Create a new migration:
    ```bash
    dotnet ef migrations add InitialCreate
    ```
-
-2. سپس دیتابیس را به‌روزرسانی کنید:
+2. Update the database:
    ```bash
    dotnet ef database update
    ```
 
 ---
 
-## 9. آزمایش پروژه
+## 9. Testing the Project
 
-برای اجرای پروژه، دستور زیر را وارد کنید:
-
-```bash
-dotnet run
-```
-
-سپس به صفحه `Product` بروید و اطمینان حاصل کنید که داده‌ها به درستی نمایش داده می‌شوند.
+1. Run the project:
+   ```bash
+   dotnet run
+   ```
+2. Navigate to the relevant Razor Pages to test the functionality.
 
 ---
 
-## 10. عیب‌یابی و مشکلات رایج
+## 10. Troubleshooting
 
-1. **خطای "Namespace not found"**
-   - اطمینان حاصل کنید که تمامی `using`های لازم وارد شده باشد.
-   
-2. **خطای ساخت (Build errors)**
-   - دستور `dotnet build` را اجرا کنید تا مشکلات ساخت شناسایی شوند.
-   
-3. **مشکلات اتصال به دیتابیس**
-   - اتصال به دیتابیس را در `appsettings.json` بررسی کنید و اطمینان حاصل کنید که تنظیمات درست هستند.
+1. **Error: Namespace not found**
+   - Ensure all necessary `using` directives are included.
+
+2. **Build errors**
+   - Run `dotnet build` to identify and fix issues.
+
+3. **Database connection issues**
+   - Verify the connection string in `appsettings.json`.
 
 ---
 
-## 11. اطلاعات تیم توسعه‌دهنده
+## 11. Development Team
 
-این پروژه توسط تیم زیر توسعه داده شده است:
+This project was developed by:
 
-- **حسین طحان مفرد طاهری** (توسعه‌دهنده اصلی)
-- **امیر محسن راهی** (توسعه‌دهنده بخش امنیت)
-- **متین عباس دوست** (توسعه‌دهنده بخش طراحی رابط کاربری)
+- **Hosein Tahan**
+- **Amir Mohsen Rahi**
+- **Matin Abbas Doost**
 
-**Developed by**: Ho3einTahan
+**Developed by:** Ho3einTahan
+
