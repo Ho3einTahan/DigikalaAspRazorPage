@@ -1,0 +1,120 @@
+﻿@page
+@model digikala_netCore.Pages.Product.ProductManageModel
+@{
+    ViewData["Title"] = "مدیریت محصولات";
+}
+
+<style>
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "IRANSans", Arial, sans-serif;
+        background: #f8f9fa;
+        color: #333;
+    }
+
+    header {
+        background-color: #4e73df;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 15px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #4e73df;
+        color: white;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 8px 15px;
+        font-size: 1rem;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-edit {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+        .btn-edit:hover {
+            background-color: #138496;
+        }
+
+    .btn-delete {
+        background-color: #d9534f;
+        color: white;
+    }
+
+        .btn-delete:hover {
+            background-color: #c9302c;
+        }
+</style>
+
+<header>مدیریت محصولات</header>
+
+<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>شناسه</th>
+                <th>تصویر</th>
+                <th>نام محصول</th>
+                <th>قیمت</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td><img src="@product.ImageUrl" alt="@product.Name" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" /></td>
+                    <td>@product.Name</td>
+                    <td>@string.Format("{0:N0} تومان", product.Price)</td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href="/Product/Edit/@product.Id" class="btn btn-edit">ویرایش</a>
+                            <a href="/Product/Delete/@product.Id" class="btn btn-delete">حذف</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
