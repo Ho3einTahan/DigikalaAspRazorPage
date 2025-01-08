@@ -1,13 +1,13 @@
 ﻿@page
-@model CreateProductModel
+@model LoginModel
 @{
-    ViewData["Title"] = "افزودن محصول";
+    ViewData["Title"] = "Register";
 }
 
 <style>
-    html, body {
-        height: 100%;
+    body {
         margin: 0;
+        padding: 0;
         font-family: Arial, sans-serif;
         background: linear-gradient(135deg, #1e1e2f, #3a3a5c);
         display: flex;
@@ -15,21 +15,27 @@
         justify-content: center;
     }
 
-    .form-container {
+    .login-container {
         width: 100%;
-        max-width: 500px;
-        background: white;
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        max-width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    h1 {
-        text-align: center;
-        margin-bottom: 20px;
+    .login-box {
+        width: 100%;
+        max-width: 400px;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+    }
+
+    h2 {
+        font-size: 1.5rem;
         color: #333333;
         font-weight: bold;
-        font-size: 1.5rem;
     }
 
     .form-label {
@@ -57,40 +63,44 @@
         font-size: 1rem;
         padding: 10px;
         transition: background-color 0.3s ease;
-        width: 100%;
     }
 
         .btn:hover {
             background-color: #375acb;
         }
 
-    .alert {
-        margin-top: 10px;
-        color: red;
-        font-size: 0.9rem;
-    }
 </style>
-
-<div class="form-container">
-    <h1>افزودن محصول</h1>
-    <form method="post" enctype="multipart/form-data">
-        <label for="name" class="form-label">نام محصول</label>
-        <input type="text" id="name" name="Name" class="form-control" placeholder="نام محصول را وارد کنید" required />
-
-        <label for="description" class="form-label">توضیحات</label>
-        <textarea id="description" name="Description" class="form-control" placeholder="توضیحات محصول را وارد کنید" rows="3"></textarea>
-
-        <label for="price" class="form-label">قیمت</label>
-        <input type="number" id="price" name="Price" class="form-control" placeholder="قیمت محصول را وارد کنید" step="0.01" required />
-
-        <label for="image" class="form-label">تصویر محصول</label>
-        <input type="file" id="image" name="Image" class="form-control" accept="image/*" required />
-
-        <button type="submit" class="btn">افزودن محصول</button>
+<div class="login-container d-flex justify-content-center align-items-center">
+    <div class="login-box p-5">
+        <h2 class="text-center mb-4">ورود کاربر</h2>
+        <form method="post">
+            <div class="mb-3">
+                <input type="text" id="username" name="Username" class="form-control" placeholder="نام کاربری خود را وارد کنید" required />
+            </div>
+            <div class="mb-3">
+                <input type="password" id="password" name="Password" class="form-control" placeholder="رمز عبور خود را وارد کنید" required />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">ورود</button>
+        </form>
 
         @if (!string.IsNullOrEmpty(Model.ErrorMessage))
         {
-            <div class="alert">@Model.ErrorMessage</div>
+            <div class="alert">
+                <h5>@Model.ErrorMessage</h5>
+            </div>
         }
-    </form>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert">
+                لطفاً خطاهای زیر را بررسی کنید:
+                <ul>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
 </div>
