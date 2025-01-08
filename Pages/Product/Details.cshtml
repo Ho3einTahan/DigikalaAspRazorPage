@@ -1,0 +1,121 @@
+﻿@page "{id:int}"
+@model digikala_netCore.Pages.Product.DetailsModel
+@{
+    ViewData["Title"] = "جزئیات محصول";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "IRANSans", Arial, sans-serif;
+        background-color: #f8f8f8;
+        color: #333;
+    }
+
+    header {
+        background-color: #ef394e;
+        color: white;
+        padding: 15px 20px;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        gap: 20px;
+    }
+
+    .product-image {
+        flex: 1;
+        max-width: 400px;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .product-details {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .product-price {
+        font-size: 1.8rem;
+        color: #ef394e;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .product-description {
+        font-size: 1rem;
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
+    .action-buttons {
+        margin-top: auto;
+        display: flex;
+        gap: 15px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+        text-align: center;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back {
+        background-color: #ef394e;
+        color: white;
+    }
+
+        .btn-back:hover {
+            background-color: #d92d3d;
+        }
+
+    .btn-add-to-cart {
+        background-color: #00a049;
+        color: white;
+    }
+
+        .btn-add-to-cart:hover {
+            background-color: #00873a;
+        }
+</style>
+
+<header>جزئیات محصول</header>
+
+<div class="container">
+    <img src="@Model.Product.ImageUrl" alt="@Model.Product.Name" class="product-image" />
+
+    <div class="product-details">
+        <h1 class="product-title">@Model.Product.Name</h1>
+        <p class="product-price">@string.Format("{0:N0} تومان", Model.Product.Price)</p>
+        <p class="product-description">@Model.Product.Description</p>
+
+        <div class="action-buttons">
+            <a href="/" class="btn btn-back">بازگشت به لیست محصولات</a>
+            <a href="/Cart/Add/@Model.Product.Id" class="btn btn-add-to-cart">افزودن به سبد خرید</a>
+        </div>
+    </div>
+</div>
