@@ -1,0 +1,108 @@
+﻿@page "{id:int}"
+@model digikala_netCore.Pages.Product.EditModel
+@{
+    ViewData["Title"] = "ویرایش محصول";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "IRANSans", Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #4e73df;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    label {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    input, textarea {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+        input:focus, textarea:focus {
+            border-color: #4e73df;
+            outline: none;
+        }
+
+    button {
+        padding: 10px;
+        background: #4e73df;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+        button:hover {
+            background: #375acb;
+        }
+
+    .cancel-btn {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+        .cancel-btn a {
+            color: #d9534f;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+            .cancel-btn a:hover {
+                color: #c9302c;
+            }
+</style>
+
+<div class="container">
+    <h1>ویرایش محصول</h1>
+    <form method="post">
+        <label for="name">نام محصول:</label>
+        <input type="text" id="name" name="Product.Name" value="@Model.Product.Name" required />
+        @Html.HiddenFor(model => model.Product.Id)
+
+        <label for="price">قیمت محصول:</label>
+        <input type="number" id="price" name="Product.Price" value="@Model.Product.Price" required />
+
+        <label for="description">توضیحات محصول:</label>
+        <textarea id="description" name="Product.Description" rows="5">@Model.Product.Description</textarea>
+
+        <label for="image">آدرس تصویر محصول:</label>
+        <input type="text" id="image" name="Product.ImageUrl" value="@Model.Product.ImageUrl" />
+
+        <button type="submit">ذخیره تغییرات</button>
+    </form>
+    <div class="cancel-btn">
+        <a href="/Product/ProductManage">لغو</a>
+    </div>
+</div>
