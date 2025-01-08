@@ -1,19 +1,23 @@
+using digikala_netCore.Data;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using digikala_netCore.Models;
 
 namespace digikala_netCore.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ApplicationDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
+
+        public List<ProductModel> Products { get; set; }
 
         public void OnGet()
         {
-
+            Products = _context.Products.ToList();
         }
     }
 }
