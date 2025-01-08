@@ -1,5 +1,5 @@
 ﻿@page
-@model CreateProductModel
+@model digikala_netCore.Pages.Product.CreateProductModel
 @{
     ViewData["Title"] = "افزودن محصول";
 }
@@ -77,16 +77,12 @@
     <div class="form-container">
         <h1>افزودن محصول</h1>
         <form method="post" enctype="multipart/form-data">
-            <label for="name" class="form-label">نام محصول</label>
             <input type="text" id="name" name="Name" class="form-control" placeholder="نام محصول را وارد کنید" required />
 
-            <label for="description" class="form-label">توضیحات</label>
             <textarea id="description" name="Description" class="form-control" placeholder="توضیحات محصول را وارد کنید" rows="3"></textarea>
 
-            <label for="price" class="form-label">قیمت</label>
             <input type="number" id="price" name="Price" class="form-control" placeholder="قیمت محصول را وارد کنید" step="0.01" required />
 
-            <label for="image" class="form-label">تصویر محصول</label>
             <input type="file" id="image" name="Image" class="form-control" accept="image/*" required />
 
             <button type="submit" class="btn">افزودن محصول</button>
